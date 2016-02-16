@@ -1,11 +1,15 @@
 // Creates the gservice factory. This will be the primary means by which we interact with Google Maps
 angular.module('gservice', [])
-    .factory('gservice', function($http){
+    .factory('gservice', function($rootScope, $http){
 
         // Initialize Variables
         // -------------------------------------------------------------
         // Service our factory will return
         var googleMapService = {};
+
+        // Handling Clicks and location selection
+        googleMapService.clickLat  = 0;
+        googleMapService.clickLong = 0;
 
         // Array of locations obtained from API calls
         var locations = [];
@@ -81,7 +85,7 @@ var initialize = function(latitude, longitude) {
 
         // Create a new map and place in the index.html page
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 3,
+            zoom: 12,
             center: myLatLng
         });
     }
@@ -108,11 +112,32 @@ var initialize = function(latitude, longitude) {
     var initialLocation = new google.maps.LatLng(latitude, longitude);
     var marker = new google.maps.Marker({
         position: initialLocation,
-        animation: google.maps.Animation.BOUNCE,
         map: map,
         icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     });
     lastMarker = marker;
+
+    // Clicking on the Map moves the bouncing red marker
+    google.maps.event.addListener(map, 'click', function(e){
+        var marker = new google.maps.Marker({
+            position: e.latLng,
+            map: map,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+        });
+
+        // When a new spot is selected, delete the old red bouncing marker
+        if(lastMarker){
+            lastMarker.setMap(null);
+        }
+
+        // Create a new red bouncing marker and move to it
+        lastMarker = marker;
+
+        // Update Broadcasted Variable (lets the panels know to change their lat, long values)
+        googleMapService.clickLat = marker.getPosition().lat();
+        googleMapService.clickLong = marker.getPosition().lng();
+        $rootScope.$broadcast("clicked");
+    });
 
 };
 
