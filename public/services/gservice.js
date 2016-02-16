@@ -86,7 +86,7 @@ var initialize = function(latitude, longitude) {
         });
     }
 
-    // Loop through each location in the array and place a marker
+    //Loop through each location in the array and place a marker
     locations.forEach(function(n, i){
         var marker = new google.maps.Marker({
             position: n.latlon,

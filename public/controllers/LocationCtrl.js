@@ -1,6 +1,6 @@
 // public/controllers/LocationCtrl.js
 
-angular.module('LocationCtrl', ['gservice']).controller('LocationController', function($scope, $http) {
+angular.module('LocationCtrl', ['gservice']).controller('LocationController', function($scope, $http, gservice) {
 
     $scope.formData = {};
     var coords = {};
@@ -27,7 +27,7 @@ angular.module('LocationCtrl', ['gservice']).controller('LocationController', fu
                 $scope.formData.place = "";
                 $scope.formData.description = ""; 
 
-                gservice.refresh($scope.formData.latitude, $scope.formData.longitude);               
+                gservice.refresh(-25.363, 131.044);            
             })
             .error(function (data) {
                 console.log('Error: ' + data);
