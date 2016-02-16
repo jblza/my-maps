@@ -7,13 +7,12 @@
         .when('/', {
             templateUrl: 'views/home.html',
             controller: 'MainController'
+        })
+        .when('/enterLocation', {
+            templateUrl: 'views/enterLocation.html',
+            controller: 'LocationController'
         });
-
-        // // nerds page that will use the NerdController
-        // .when('/nerds', {
-        //     templateUrl: 'views/nerd.html',
-        //     controller: 'NerdController'
-        // });
+      
 
     $locationProvider.html5Mode(true);
 
