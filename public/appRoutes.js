@@ -3,14 +3,12 @@
 
     $routeProvider
 
-        // home page
         .when('/', {
-            templateUrl: 'views/home.html',
-            controller: 'MainController'
-        })
-        .when('/enterLocation', {
             templateUrl: 'views/enterLocation.html',
             controller: 'LocationController'
+        }).when('/list', {
+            templateUrl: 'views/home.html',
+            controller: 'MainController'
         });
       
 

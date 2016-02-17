@@ -11,6 +11,8 @@ angular.module('gservice', [])
         googleMapService.clickLat  = 0;
         googleMapService.clickLong = 0;
 
+        var bigMap;
+
         // Array of locations obtained from API calls
         var locations = [];
 
@@ -40,6 +42,13 @@ angular.module('gservice', [])
                 initialize(latitude, longitude);
             }).error(function(){});
         };
+
+        googleMapService.clearRedDot = function () {
+            if(bigMap){
+              google.maps.event.clearInstanceListeners(bigMap);
+
+            }
+        }
 
         // Private Inner Functions
         // --------------------------------------------------------------
@@ -88,6 +97,8 @@ var initialize = function(latitude, longitude) {
             zoom: 12,
             center: myLatLng
         });
+
+        bigMap = map;
     }
 
     //Loop through each location in the array and place a marker
@@ -103,6 +114,9 @@ var initialize = function(latitude, longitude) {
         google.maps.event.addListener(marker, 'click', function(e){
 
             // When clicked, open the selected marker's message
+            if (currentSelectedMarker){
+                currentSelectedMarker.message.close();
+            }
             currentSelectedMarker = n;
             n.message.open(map, marker);
         });

@@ -1,6 +1,12 @@
 <!-- public/views/home.html -->
 
 <div class="jumbotron text-center">
-    <h1>Click On The Map To Create Location</h1>
-
+  <div class='locations'>
+    <div class='location' ng-repeat="location in data.locations | filter:search | orderBy:'-created_at'">
+        <div class="info">
+          <div class="place"> {{location.place}} </div>
+            <div class="description">  {{location.description}}</div>
+        </div>
+    </div>
+  </div>      
 </div>

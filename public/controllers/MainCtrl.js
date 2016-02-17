@@ -1,14 +1,19 @@
 // public/controllers/MainCtrl.js
 
-angular.module('MainCtrl', ['gservice']).controller('MainController', function($scope, gservice) {
+angular.module('MainCtrl', ['gservice']).controller('MainController', function($http, $scope, gservice) {
+  
+  $scope.data = {};
 
-  // var myLatlng = {lat: -25.363, lng: 131.044};
-  // var map = new google.maps.Map(document.getElementById('map'), {
-  //           zoom: 3,
-  //           center: myLatlng
-  // }); 
-    
+  var getLocations = function () {
+    $http.get('/locations')
+            .success(function (data) {
+                $scope.data.locations = data;        
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+  };
 
-    console.log("MAIN CONTROLLER");
+  getLocations();
 
 });

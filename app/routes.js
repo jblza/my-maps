@@ -18,7 +18,7 @@ var Location = require('./models/location.js');
             query.exec(function(err, locations){
             if(err) {res.send(err);}
 
-            // If no errors are found, it responds with a JSON of all users
+            // If no errors are found, it responds with a JSON of all locations
             res.json(locations);
             });
         });
@@ -31,11 +31,11 @@ var Location = require('./models/location.js');
           newLocation.save(function(err){
             if(err) {res.send(err);}
 
-            // If no errors are found, it responds with a JSON of the new user
+            // If no errors are found, it responds with a JSON of the new location
             res.json(req.body);
           });
         });
-        
+
         // route to handle delete goes here (app.delete)
         app.delete('/locations', function (req, res) {
           Location.find(function(err, locations) {
